@@ -36,7 +36,7 @@ def home():
     return "✅ Telegram Job Bot is running!"
 
 def run_web():
-    app.run(host='0.0.0.0', port=8080)
+    app.run(host='0.0.0.0', port=8081)
 
 def keep_alive():
     t = Thread(target=run_web)
