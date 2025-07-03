@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, render_template
+from threading import Thread
 import requests
 
 app = Flask(__name__)
@@ -27,5 +28,20 @@ def extract_redirect():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-if __name__ == '__main__':
-    app.run(debug=True)
+
+app = Flask('')
+
+@app.route('/')
+def home():
+    return "✅ Telegram Job Bot is running!"
+
+def run_web():
+    app.run(host='0.0.0.0', port=8080)
+
+def keep_alive():
+    t = Thread(target=run_web)
+    t.start()
+
+if __name__ == "__main__":
+    keep_alive()
+    main()
