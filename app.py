@@ -33,7 +33,7 @@ app = Flask('')
 
 @app.route('/')
 def home():
-    return "✅ Telegram Job Bot is running!"
+    return "🚀 Bypass Python App is running!"
 
 def run_web():
     app.run(host='0.0.0.0', port=8081)
