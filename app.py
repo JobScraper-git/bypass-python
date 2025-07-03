@@ -33,7 +33,6 @@ app = Flask('')
 
 @app.route('/')
 def home():
-    return "🚀 Bypass Python App is running!"
     return render_template('index.html')
 
 def run_web():
