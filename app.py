@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return "App is alive!"  # This is pinged by UptimeRobot or similar
+    return render_template("index.html")  # This is pinged by UptimeRobot or similar
 
 @app.route('/extract', methods=['POST'])
 def extract_redirect():
