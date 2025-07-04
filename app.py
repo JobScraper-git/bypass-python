@@ -1,8 +1,11 @@
-from flask import Flask, request, jsonify, render_template
-from threading import Thread
+from flask import Flask, request, jsonify
 import requests
 
 app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "App is alive!"  # This is pinged by UptimeRobot or similar
 
 @app.route('/extract', methods=['POST'])
 def extract_redirect():
@@ -13,9 +16,11 @@ def extract_redirect():
         return jsonify({'error': 'No URL provided'}), 400
 
     try:
+        # Try HEAD request first
         r = requests.head(url, allow_redirects=False, timeout=10)
         redirect_url = r.headers.get("Location")
 
+        # If HEAD doesn't return a redirect, try GET
         if not redirect_url:
             r = requests.get(url, allow_redirects=False, stream=True, timeout=10)
             redirect_url = r.headers.get("Location")
@@ -24,20 +29,5 @@ def extract_redirect():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-
-app = Flask('')
-
-@app.route('/')
-def home():
-    return render_template('index.html')
-
-def run_web():
-    app.run(host='0.0.0.0', port=8081)
-
-def keep_alive():
-    t = Thread(target=run_web)
-    t.start()
-
 if __name__ == "__main__":
-    keep_alive()
-    main()
+    app.run(host="0.0.0.0", port=8080)
